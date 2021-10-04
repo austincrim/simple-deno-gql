@@ -19,7 +19,7 @@ const notes = [
   },
 ]
 const resolvers = {
-  note: ({ id }: { id: string }) => {
+  note: ({ id }) => {
     return notes.find((note) => note.id === id)
   },
 }
@@ -28,7 +28,7 @@ addEventListener("fetch", (event) => {
   event.respondWith(handleRequest(event.request))
 })
 
-async function handleRequest(request: Request) {
+async function handleRequest(request) {
   const { pathname } = new URL(request.url)
 
   if (pathname === "/" && request.method === "GET") {
