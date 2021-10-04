@@ -1,3 +1,5 @@
+/// <reference path="./deploy.d.ts" />
+
 import {
   buildSchema,
   graphql
@@ -24,7 +26,7 @@ const resolvers = {
   }
 }
 
-addEventListener('fetch', (event) => {
+addEventListener('fetch', (event: FetchEvent) => {
   event.respondWith(handleRequest(event.request))
 })
 
