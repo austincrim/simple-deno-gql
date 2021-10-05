@@ -29,6 +29,6 @@ console.log('module scope!!!');
 addEventListener("fetch", async (event) => {
   const { query } = await event.request.json()
   const result = await graphql(schema, query, resolvers)
-
+  console.log(result);
   event.respondWith(new Response(JSON.stringify(result)))
 })
