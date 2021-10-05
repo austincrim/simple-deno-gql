@@ -24,6 +24,8 @@ const resolvers = {
   },
 }
 
+console.log('module scope!!!');
+
 addEventListener("fetch", (event) => {
   event.respondWith(handleRequest(event.request))
 })
