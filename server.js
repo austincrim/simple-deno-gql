@@ -26,26 +26,6 @@ const resolvers = {
 
 console.log('module scope!!!');
 
-addEventListener("fetch", (event) => {
-  event.respondWith(handleRequest(event.request))
-})
-
-async function handleRequest(request) {
-  const { pathname } = new URL(request.url)
-
-  if (pathname === "/" && request.method === "GET") {
-    return new Response(
-      `<html><body><p>try posting a query to <pre>/graphql</pre></p></body></html>`,
-      {
-        status: 200,
-        headers: {
-          "content-type": "text/html",
-        },
-      }
-    )
-  }
-}
-
 addEventListener("fetch", async (event) => {
   const { query } = await event.request.json()
   const result = await graphql(schema, query, resolvers)
