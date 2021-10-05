@@ -1,6 +1,6 @@
 import {
   buildSchema,
-  graphql,
+  graphql
 } from "https://raw.githubusercontent.com/adelsz/graphql-deno/v15.0.0/mod.ts"
 
 const schemaString = await Deno.readTextFile("./schema.gql")
@@ -10,13 +10,13 @@ const notes = [
   {
     id: "1",
     title: "Hello deno!",
-    content: "This is an example note",
+    content: "This is an example note"
   },
   {
     id: "2",
     title: "Hello graphql!",
-    content: "This is a different note",
-  },
+    content: "This is a different note"
+  }
 ]
 const resolvers = {
   note: ({ id }) => {
@@ -44,24 +44,11 @@ async function handleRequest(request) {
       }
     )
   }
-  if (pathname === "/graphql" && request.method === "POST") {
-    const contentType = request.headers.get("content-type")
-    let query
-    if (contentType === "application/graphql") {
-      query = await request.json()
-    } else {
-      const body = await request.json()
-      query = body.query
-    }
-    const res = await graphql(schema, query, resolvers)
-
-    return new Response(JSON.stringify(res), {
-      status: 200,
-    })
-  }
-
-  return new Response(null, {
-    status: 404,
-    statusText: "not found",
-  })
 }
+
+addEventListener("fetch", async (event) => {
+  const { query } = await event.request.json()
+  const result = await graphql(schema, query, resolvers)
+
+  event.respondWith(new Response(JSON.stringify(result)))
+})
